@@ -6,6 +6,7 @@ import { TrendingUp, Phone, Calendar, Euro, AlertTriangle, CheckCircle, XCircle,
 
 export default function Dashboard() {
   const { employee, months, settings } = useStore();
+
   const endDate = employee.startDate ? addMonths(employee.startDate, 6) : '';
   const daysLeft = endDate ? getDaysUntil(endDate) : null;
 
@@ -17,10 +18,11 @@ export default function Dashboard() {
   const m3TermineGesamt = sumWeekly(m3.termineVereinbart);
   const m3TermineGehalten = sumWeekly(m3.termineGehalten);
   const m4Umsatz = m4.umsatz || 0;
-  const m5Pipeline = sumWeekly(m5.pipelineWert);
+  const m5Pipeline = m5.deals?.reduce((sum, d) => sum + d.wert, 0) || 0;
   const m5Umsatz = m5.umsatz || 0;
-  const m6Pipeline = sumWeekly(m6.pipelineWert);
+  const m6Pipeline = m6.deals?.reduce((sum, d) => sum + d.wert, 0) || 0;
   const m6Umsatz = m6.umsatz || 0;
+
   const gesamtUmsatz = m4Umsatz + m5Umsatz + m6Umsatz;
   const gesamtPipeline = sumWeekly(m4.pipelineWert) + m5Pipeline + m6Pipeline;
 
